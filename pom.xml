@@ -15,6 +15,7 @@
 	<description>JWT based spring security</description>
 	<properties>
 		<java.version>17</java.version>
+		<jsonwebtoken.version>0.9.1</jsonwebtoken.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,6 +33,12 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jsonwebtoken.version}</version>
 		</dependency>
 
 		<dependency>
@@ -61,6 +68,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${project.parent.version}</version>
 				<configuration>
 					<excludes>
 						<exclude>
