@@ -15,15 +15,12 @@ import com.petproject.jwtapptest.model.User;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
     private Long id;
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private String username;
 
     public User toUser(){
         User user = new User();
         user.setId(id);
-        user.setUserName(userName);
+        user.setUsername(username);
 
         return user;
     }
@@ -31,7 +28,7 @@ public class UserDto {
     public static UserDto fromUser(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setUserName(user.getUserName());
+        userDto.setUsername(user.getUsername());
 
         return userDto;
     }

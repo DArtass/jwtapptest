@@ -10,15 +10,15 @@ import java.util.Date;
 public class JwtUser implements UserDetails {
 
     private final Long id;
-    private final String userName;
+    private final String username;
     private final String password;
     private final boolean enabled;
     private final Date lastPasswordResetDate;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser(Long id, String userName, String password, boolean enabled, Date lastPasswordResetDate, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUser(Long id, String username, String password, boolean enabled, Date lastPasswordResetDate, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.lastPasswordResetDate = lastPasswordResetDate;
@@ -32,7 +32,7 @@ public class JwtUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @JsonIgnore

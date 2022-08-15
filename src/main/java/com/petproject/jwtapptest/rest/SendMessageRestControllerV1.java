@@ -1,15 +1,23 @@
 package com.petproject.jwtapptest.rest;
 
-import com.petproject.jwtapptest.dto.AdminUserDto;
+import com.petproject.jwtapptest.dto.SendMessageRequestDto;
+import com.petproject.jwtapptest.model.Message;
 import com.petproject.jwtapptest.model.User;
+import com.petproject.jwtapptest.repository.MessageRepository;
 import com.petproject.jwtapptest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * REST controller for ROLE_ADMIN requests.
@@ -19,26 +27,45 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(value = "/api/v1/sendmess/")
+@RequestMapping(value = "/api/v1/messages/")
 public class SendMessageRestControllerV1 {
 
     private final UserService userService;
+    private MessageRepository messageRepository;
 
     @Autowired
-    public SendMessageRestControllerV1(UserService userService) {
+    public SendMessageRestControllerV1(UserService userService, MessageRepository messageRepository) {
         this.userService = userService;
+        this.messageRepository = messageRepository;
     }
 
-    @GetMapping(value = "users/{id}")
-    public ResponseEntity<AdminUserDto> getUserById(@PathVariable(name = "id") Long id) {
-        User user = userService.findById(id);
+    @PostMapping(value = "send")
+    public ResponseEntity sendMessage(@RequestBody SendMessageRequestDto requestDto) {
+        try {
+            String username = requestDto.getUsername();
+            User user = userService.findByUserName(username);
+            if (user == null) {
+                throw new UsernameNotFoundException("User with username: " + username + " not found");
+            }
 
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            String messageStr = requestDto.getMessage();
+            if (messageStr.substring(0, 8).equalsIgnoreCase("history ")) {
+                Map <Object, Object> response = new HashMap<>();
+                List<Message> messages = messageRepository.findAll();
+
+                for (int i = messages.size() - 1; i >= 0 & i > messages.size() - 11; i--) {
+                    response.put("message " + i + ":", messages.get(i).getText());
+                }
+                return ResponseEntity.ok(response);
+            }
+            Message message = new Message(messageStr, user);
+            messageRepository.save(message);
+
+            return new ResponseEntity<>(requestDto, HttpStatus.OK);
+
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid username or password");
         }
 
-        AdminUserDto result = AdminUserDto.fromUser(user);
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

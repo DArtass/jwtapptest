@@ -10,7 +10,7 @@ import lombok.Data;
  */
 
 @Data
-public class AuthenticationRequestDto {
+public class SendMessageRequestDto {
     private String username;
-    private String password;
+    private String message;
 }

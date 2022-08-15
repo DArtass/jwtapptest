@@ -11,7 +11,7 @@ import java.util.List;
 public class User extends BaseEntity{
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -21,4 +21,11 @@ public class User extends BaseEntity{
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "message_id", referencedColumnName = "id")})
     private List<Message> messages;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id: " + super.getId() + ", " +
+                "name: " + username + "}";
+    }
 }
