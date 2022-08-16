@@ -55,14 +55,14 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="sender_id" type="BIGINT"></column>
+            <column name="user_id" type="BIGINT"/>
         </createTable>
     </changeSet>
 
     <changeSet id="1.0.3" author="alexandr.trofimov">
-        <addForeignKeyConstraint baseColumnNames="sender_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="messages"
-                                 constraintName="fk_user_messages_messages"
+                                 constraintName="fk_messages_users"
                                  onDelete="CASCADE"
                                  onUpdate="RESTRICT"
                                  referencedColumnNames="id"
@@ -76,11 +76,11 @@
         </insert>
         <insert tableName="messages">
             <column name="text" value="testmessage 1"/>
-            <column name="sender_id" value="1"/>
+            <column name="user_id" value="1"/>
         </insert>
         <insert tableName="messages">
             <column name="text" value="testmessage 2"/>
-            <column name="sender_id" value="1"/>
+            <column name="user_id" value="1"/>
         </insert>
     </changeSet>
 

@@ -52,7 +52,7 @@ public class SendMessageRestControllerV1 {
             if (messageStr.length() > 7)
                 if (messageStr.substring(0, 8).equalsIgnoreCase("history ")) {
                     Map<Object, Object> response = new HashMap<>();
-                    List<Message> messages = messageRepository.findBySender(user);
+                    List<Message> messages = messageRepository.findByUser(user);
 
                     for (int i = messages.size() - 1; i >= 0 & i > messages.size() - 11; i--) {
                         response.put("message " + i + ":", messages.get(i).getText());

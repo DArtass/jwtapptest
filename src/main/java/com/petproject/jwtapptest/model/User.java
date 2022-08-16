@@ -16,10 +16,7 @@ public class User extends BaseEntity{
     @Column(name = "password")
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "messages",
-            joinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "sender_id", referencedColumnName = "id")})
+    @OneToMany (mappedBy="user", fetch=FetchType.EAGER)
     private List<Message> messages;
 
     @Override

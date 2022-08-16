@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  mysql:
+    image: 'mysql:8'
+    container_name: 'java-mysql'
+    ports:
+      - "3301:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+  jwtapptest:
+    build: ./
+    container_name: 'jwtapptest'
+    ports:
+    - "8075:8075"

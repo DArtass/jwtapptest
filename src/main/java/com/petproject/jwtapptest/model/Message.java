@@ -12,14 +12,15 @@ public class Message extends BaseEntity{
     @Column(name = "text")
     private String text;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User sender;
+    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @JoinColumn (name="user_id")
+    private User user;
 
     public Message() {}
 
-    public Message(String text, User sender) {
+    public Message(String text, User user) {
         this.text = text;
-        this.sender = sender;
+        this.user = user;
         this.setStatus(Status.valueOf("ACTIVE"));
     }
 
@@ -28,6 +29,6 @@ public class Message extends BaseEntity{
         return "{" +
                 "id: " + super.getId() + ", " +
                 "text: " + text + ", " +
-                "sender: " + sender.getUsername() + "}";
+                "sender: " + user.getUsername() + "}";
     }
 }
