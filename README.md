@@ -6,8 +6,8 @@ spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/jwtapptest
 users: 
 username: "test_user" password: "test"
 messages:
-text: "testmessage 1" sender_id "1"
-text: "testmessage 2" sender_id "1"
+text: "testmessage 1" user_id "1"
+text: "testmessage 2" user_id "1"
 
 cURL:
 1) Получение токена: 
