@@ -1,5 +1,8 @@
 # jwtapptest
-БД MySQL инициализируется при помощи Liquibase:
+БД подключается по 
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/jwtapptest
+
+инициализируется при помощи Liquibase:
 users: 
 username: "test_user" password: "test"
 messages:
