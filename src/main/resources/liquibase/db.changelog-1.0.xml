@@ -54,23 +54,15 @@
             <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">
                 <constraints nullable="false"/>
             </column>
-        </createTable>
-    </changeSet>
 
-    <changeSet id="1.0.2" author="alexandr.trofimov">
-        <createTable tableName="user_messages">
-            <column name="user_id" type="BIGINT">
-            </column>
-
-            <column name="message_id" type="BIGINT">
-            </column>
+            <column name="sender_id" type="BIGINT"></column>
         </createTable>
     </changeSet>
 
     <changeSet id="1.0.3" author="alexandr.trofimov">
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="user_messages"
-                                 constraintName="fk_user_messages_user"
+        <addForeignKeyConstraint baseColumnNames="sender_id"
+                                 baseTableName="messages"
+                                 constraintName="fk_user_messages_messages"
                                  onDelete="CASCADE"
                                  onUpdate="RESTRICT"
                                  referencedColumnNames="id"
@@ -78,24 +70,18 @@
     </changeSet>
 
     <changeSet id="1.0.4" author="alexandr.trofimov">
-        <addForeignKeyConstraint baseColumnNames="message_id"
-                                 baseTableName="user_messages"
-                                 constraintName="fk_user_messages_messages"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="messages"/>
+        <insert tableName="users">
+            <column name="user_name" value="test_user"/>
+            <column name="password" value="$2a$04$xDTuuXfHePcdbAeeHfupeuUOwFYd7cCfoL36QmHHgbeXJZ9J6fMYW"/>
+        </insert>
+        <insert tableName="messages">
+            <column name="text" value="testmessage 1"/>
+            <column name="sender_id" value="1"/>
+        </insert>
+        <insert tableName="messages">
+            <column name="text" value="testmessage 2"/>
+            <column name="sender_id" value="1"/>
+        </insert>
     </changeSet>
-
-    <!--<changeSet id="1.0.5" author="alexandr.trofimov">
-        <insert tableName="messages">
-            <column name="text" value="message1"/>
-        </insert>
-
-        <insert tableName="messages">
-            <column name="text" value="message2"/>
-        </insert>
-    </changeSet>-->
-
 
 </databaseChangeLog>
